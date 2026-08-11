@@ -1,10 +1,12 @@
 from pip._internal import models
 
+from models.asset import Asset
 
-class stock(models.Model):
-    def __init__(self, abbreviation, isin, market_cap, enterprise_value, profit_margin, return_on_assets, return_on_equity, revenue, total_cash, total_debt):
-        self.abbreviation = abbreviation
-        self.isin = isin
+# a stock is an asset
+class Stock(Asset):
+    def __init__(self, isin, name, market_cap, enterprise_value, profit_margin, return_on_assets,
+                 return_on_equity, revenue, total_cash, total_debt):
+        super().__init__(isin, name)
         self.market_cap = market_cap
         self.enterprise_value = enterprise_value
         self.profit_margin = profit_margin
