@@ -29,4 +29,5 @@ class Watchlist():
         for p in self.products:
             if p.isin == asset.isin:
                 self.products.remove(asset)
+                exit()
         raise ValueError(f"{asset.name} is not in the watchlist and therefore cannot be removed.")
