@@ -5,4 +5,6 @@ class SQLiteDatabase:
         self.db_path = db_path
 
     def connect(self):
-        return sqlite3.connect(self.db_path)
+        connection = sqlite3.connect(self.db_path)
+        connection.row_factory = sqlite3.Row
+        return connection
