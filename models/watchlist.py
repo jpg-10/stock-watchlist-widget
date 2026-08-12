@@ -9,9 +9,14 @@ class SortDirection(Enum):
     ASCENDING = 'ascending'
     DESCENDING = 'descending'
 
-class Watchlist():
-    def __init__(self, name, products, sort_field: SortField = SortField.SYMBOL,
+class Watchlist:
+    def __init__(self,
+                 identifier: int | None,
+                 name: str,
+                 products,
+                 sort_field: SortField = SortField.SYMBOL,
                  sort_direction: SortDirection = SortDirection.DESCENDING):
+        self.id = identifier
         self.name = name
         self.products = products
         self.sort_field = sort_field
