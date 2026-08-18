@@ -19,3 +19,6 @@ class IAssetRepository(ABC):
 
     @abstractmethod
     def update_asset(self, asset: Asset) -> None: pass
+
+    @abstractmethod
+    def get_asset_by_name(self, asset_name: str) -> Asset | None: pass
