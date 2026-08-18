@@ -12,3 +12,14 @@ class Quote:
         self.previous_close = previous_close
         self.timestamp = timestamp
 
+    # show the total price change on this day
+    @property
+    def price_change(self) -> float:
+        return self.price - self.previous_close
+
+    # depending on the price change, show the percentage the asset has gained / fallen
+    @property
+    def percent_change(self) -> float:
+        return (self.price_change / self.previous_close) * 100
+
+
