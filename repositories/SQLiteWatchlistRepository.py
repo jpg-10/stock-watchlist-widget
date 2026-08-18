@@ -13,9 +13,9 @@ class SQLiteWatchlistRepository(IWatchlistRepository):
             cursor = connection.cursor()
             cursor.execute('''
                 INSERT INTO watchlists 
-                    (watchlist_id, watchlist) 
-                VALUES (?, ?)
-                ''', (watchlist.id, watchlist)
+                    (name, sort_field, sort_direction) 
+                VALUES (?, ?, ?)
+                ''', (watchlist.name, watchlist.sort_field, watchlist.sort_direction)
             )
 
     def delete_watchlist(self, watchlist: Watchlist) -> None:
@@ -23,7 +23,7 @@ class SQLiteWatchlistRepository(IWatchlistRepository):
             cursor = connection.execute(
                 '''
                 Delete from watchlists 
-                where watchlist_id = ?
+                where id = ?
                 ''', (watchlist.id,)
             )
 
@@ -32,7 +32,7 @@ class SQLiteWatchlistRepository(IWatchlistRepository):
             cursor = connection.execute(
                 '''
                 SELECT * FROM watchlists
-                ORDER BY watchlist_id
+                ORDER BY id
                 '''
             )
             rows = cursor.fetchall()
@@ -42,9 +42,9 @@ class SQLiteWatchlistRepository(IWatchlistRepository):
         with self.database.connect() as connection:
             cursor = connection.execute(
                 '''
-                SELECT watchlist_id, watchlist
+                SELECT *
                 FROM watchlists
-                where watchlist_id = ?
+                WHERE id = ?
                 ''', (watchlist_id,)
             )
             row = cursor.fetchone()
@@ -55,7 +55,7 @@ class SQLiteWatchlistRepository(IWatchlistRepository):
             cursor = connection.execute(
                 '''
                 UPDATE watchlists 
-                where watchlist_id = ?
-                set watchlist_name = ?, watchlist_products = ?, watchlist_sort_fields = ?, watchlist_sort_direction = ?
-                ''', (watchlist.id, watchlist.name, watchlist.products, watchlist.sort_field, watchlist.sort_direction)
+                SET watchlist_name = ?, watchlist_products = ?, watchlist_sort_fields = ?, watchlist_sort_direction = ?
+                WHERE id = ?
+                ''', (watchlist.name, watchlist.products, watchlist.sort_field.value, watchlist.sort_direction.value, watchlist.id)
             )

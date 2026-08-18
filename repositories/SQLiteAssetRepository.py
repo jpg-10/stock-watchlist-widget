@@ -61,3 +61,13 @@ class SQLiteAssetRepository(IAssetRepository):
                 """,
                 (asset.isin, asset.name, asset.symbol, asset.currency, asset.id)
             )
+
+    def get_asset_by_name(self, asset_name: str) -> Asset | None:
+        with self.database.connect() as connection:
+            cursor = connection.execute(
+                '''
+                SELECT * from assets WHERE name = ?
+                ''', (asset_name, )
+            )
+            row = cursor.fetchone()
+            return None if row is None else Asset(**dict(row))
