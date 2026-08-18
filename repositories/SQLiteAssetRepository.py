@@ -28,7 +28,7 @@ class SQLiteAssetRepository(IAssetRepository):
                 (asset_id, )
             )
             row = cursor.fetchall()
-            return None if row is None else Asset(**dict(row)[0])
+            return None if row is None else Asset(**dict(row))
 
     def add_asset(self, asset: Asset) -> None:
         with self.database.connect() as connection:

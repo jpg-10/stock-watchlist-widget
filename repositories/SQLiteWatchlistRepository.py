@@ -35,6 +35,8 @@ class SQLiteWatchlistRepository(IWatchlistRepository):
                 ORDER BY watchlist_id
                 '''
             )
+            rows = cursor.fetchall()
+            return [Watchlist(**dict(row)) for row in rows]
 
     def get_watchlist_by_id(self, watchlist_id: int) -> Watchlist | None:
         with self.database.connect() as connection:
@@ -45,6 +47,8 @@ class SQLiteWatchlistRepository(IWatchlistRepository):
                 where watchlist_id = ?
                 ''', (watchlist_id,)
             )
+            row = cursor.fetchone()
+            return Watchlist(**dict(row)) if row else None
 
     def update_watchlist(self, watchlist: Watchlist) -> None:
         with self.database.connect() as connection:
